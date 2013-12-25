@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -20,12 +21,16 @@ public class WebAppConfiguration {
     public static PropertySourcesPlaceholderConfigurer properties(){
         PropertySourcesPlaceholderConfigurer pspc =
                 new PropertySourcesPlaceholderConfigurer();
-        Resource[] resources = new ClassPathResource[ ]
-                {       new ClassPathResource( "/defaultAppConfig.properties" ),
-                        new ClassPathResource( "/myAppConfig.properties" ),
-                };
-        pspc.setLocations( resources );
+        ArrayList<Resource> properties = new ArrayList<Resource>();
+        properties.add(new ClassPathResource( "/defaultAppConfig.properties" ));
+
+        ClassPathResource privateAppConfig = new ClassPathResource("/myAppConfig.properties");
+        if (privateAppConfig.exists())
+            properties.add(privateAppConfig);
+
+        pspc.setLocations( properties.toArray(new Resource[]{}) );
         pspc.setNullValue("@null");
+
         pspc.setIgnoreUnresolvablePlaceholders( true );
         return pspc;
     }
