@@ -1,0 +1,205 @@
+body, p, li, a { font-family: georgia, times, serif;font-size:10pt;}
+h1, h2, h3 { font-family: 'Yanone Kaffeesatz', arial, serif; }
+h1.pageHeadline {
+    color:#666666;
+    font-style: italic;
+}
+
+body { margin:0;padding:0;}
+#hd {
+	width : 100%;
+	height : 87px;
+	background-color : #092E67;
+	margin-top : 0;
+    padding-left:20px;
+	padding-top : 10px;
+	border-bottom : 1px solid #888;
+	z-index : 0;
+}
+
+#featherCoinMarketValues {
+    float: right;
+    width: 20%;
+    right:10px;
+    padding-top: 20px;
+    overflow: scroll;
+    z-index : 1;
+    clear: none;
+}
+
+#ft {
+	bottom : 0;
+	width : 100%;
+	height : 99px;
+	background-color : #6493D2;
+	border-top : 1px solid #888;
+	overflow: auto;
+    float: left;
+    z-index : 0;
+    clear: both;
+    color:white;
+    font-size: x-small;
+}
+#logo {
+	width : 800px;
+	margin: 0 auto;
+	padding: 25px 50px 0 50px;
+}
+#logo h1 {
+	color : white;
+	font-size:36pt;
+	display: inline;
+}
+#logo img { 
+	display:inline;
+	vertical-align: bottom;
+	margin-left : 50px;
+	margin-right : 5px;
+}
+
+table.summaryGpu {
+    border-width:1px;
+    border-style:solid;
+    border-color:#CCCCCC;
+    background-color: #EEEEEE;
+}
+
+.minerHeadline {
+    font-size: 13pt;
+    text-align: left;
+    font-weight: bold;
+    font-style: italic;
+}
+
+table.summary {
+    border-width:1px;
+    border-style:solid;
+    border-color:#CCCCCC;
+    background-color: #EEEEEE;
+
+}
+
+table.summaryGpu td,th {
+    padding-left:5px;
+    padding-right:5px;
+    background-color: #FFFFFF;
+}
+
+table.summary td,th {
+    padding-left:5px;
+    padding-right:5px;
+    background-color: #FFFFFF;
+}
+
+td.json {
+    font-size: xx-small;
+}
+
+table.summary tfoot {
+    font-style: italic;
+}
+
+table.summary tfoot {
+    font-style: italic;
+}
+
+table.summary caption {
+    font-style: italic;
+    text-align: left;
+    font-weight: bold;
+    font-size: 13pt;
+}
+
+table.summaryGpu caption {
+    font-style: italic;
+    text-align: left;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+table.summaryGpu {
+    margin-bottom: 25px;
+}
+
+
+table.summaryGpu tfoot td {
+    background-color: #FAFAFA;
+}
+
+
+table.summary tfoot td {
+    background-color: #FAFAFA;
+}
+
+body { margin-top : 0; padding-top : 0;}
+#logo, #logo h1 { margin-top : 0; padding-top : 0;}
+
+#poolstats{
+    float:left;
+    top:88px;
+    overflow: scroll;
+    z-index: 1;
+    padding-left: 20px;
+    width: 25%;
+    clear: none;
+
+}
+
+#singlePoolInfo {
+    font-size: 11pt;
+}
+
+
+div.labelValuePair {
+    margin-bottom: 10px;
+}
+
+#featherCoinMarketValues * span.label{
+    font-weight: bold;
+    font-style: italic;
+    margin-right: 10px;
+    font-size: smaller;
+}
+
+#featherCoinMarketValues * span.value{
+
+}
+
+#bd {
+    position: absolute;
+    top: 75px;
+    bottom: 20px;
+    left:25%;
+	width: 50%;
+	overflow: scroll;
+	background-color : #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-moz-box-shadow: 0px 0px 10px #888;
+	-webkit-box-shadow: 0px 0px 10px #888;
+	box-shadow: 0px 0px 10px #888;
+    clear: none;
+    padding-left:20px;
+    padding-right:20px;
+}
+a, a:visited, a:hover, a:active {
+	color : #6493D2;
+}
+
+h1 {
+    font-size: 20pt;
+    margin-bottom: 3pt;
+}
+
+h2 {
+	padding : 0; margin:0;
+	font-size:18pt;
+    margin-bottom: 3pt;
+	color:#FF5500;
+}
+h3 {
+	padding : 0; margin:0;
+	font-size:17pt;
+	color:#092E67;
+}

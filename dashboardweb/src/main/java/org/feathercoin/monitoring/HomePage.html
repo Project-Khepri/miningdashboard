@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Feathercoin Miner Monitor</title>
+    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet'
+          type='text/css'/>
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet"/>
+
+    <script src="jquery-2.0.3.min.js"></script>
+    <script>
+
+        /*
+        $(document).ready(function() {
+            console.log('ready!');
+
+            $( "table.summary" ).click(function( event ) {
+                event.preventDefault();
+
+                $( this).find("tr.jsonContainer").toggle();
+
+            });
+
+            $( "table.summaryGpu" ).click(function( event ) {
+                event.preventDefault();
+
+                $( this).find("tr.jsonContainer").toggle();
+
+            });
+
+        });
+        */
+
+        function toggleJSONVisibility(paramTest){
+            console.log( $( paramTest).find("tr.jsonContainer"));
+            $( paramTest).find("tr.jsonContainer").toggle();
+        }
+
+    </script>
+</head>
+<body>
+<div id="hd">
+    <div id="logo">
+        <img src="ftc-small.png" width="50px" height="50px" alt="Feathercoin logo"/>
+
+        <h1 class="pageHeadline">Feathercoin Monitor</h1>
+    </div>
+</div>
+
+<div id="poolstats">
+
+    <div wicket:id="lazyLoadFtcPoolInfos">Loading pool information...</div>
+
+</div>
+
+<div id="featherCoinMarketValues">
+
+    <div wicket:id="lazyLoadFtcMarketValues">Loading FTC values ...</div>
+</div>
+
+<div id="bd">
+    <div wicket:id="lazyLoadFtcMinerInfos">Loading Miner Infos ...</div>
+
+
+</div>
+
+
+
+<div id="ft">
+    last refresh: <wicket:container wicket:id="lastRefresh"/> <br>
+    refresh time: <wicket:container wicket:id="refreshTime"/>
+
+</div>
+
+
+
+
+</body>
+</html>

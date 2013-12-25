@@ -1,0 +1,43 @@
+<html xmlns:wicket="http://wicket.apache.org">
+
+<wicket:panel>
+    <div wicket:id="poolInfos">
+        <h1><wicket:container wicket:id="poolName"/> <a wicket:id="poolLogin" target="poolLoginWindow">Login</a></h1>
+
+        <div wicket:id="poolInformationBox">
+            There were errors for this pool
+        </div>
+
+        <div wicket:id="singlePoolInfo">
+
+            <table>
+
+                <tr>
+                    <td>Payout history</td>
+                    <td>
+                        <wicket:container wicket:id="payoutHistory"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Total Hashrate</td>
+                    <td>
+                        <wicket:container wicket:id="totalHashrate"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Round estimate</td>
+                    <td>
+                        <wicket:container wicket:id="roundEstimate"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>confirmed rewards</td>
+                    <td>
+                        <wicket:container wicket:id="confirmedRewards"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</wicket:panel>
+</html>

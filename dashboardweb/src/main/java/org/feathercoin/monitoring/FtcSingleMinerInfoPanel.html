@@ -1,0 +1,115 @@
+<html xmlns:wicket="http://wicket.apache.org">
+
+<wicket:panel>
+
+        <span class="minerHeadline">Miner <a wicket:id="minerLink" target="minerDetailWindow"><wicket:container wicket:id="ip"/></a></span>
+        <table class="summary" onclick="javascript:toggleJSONVisibility(this);">
+            <thead>
+            <tr>
+                <th></th>
+                <th>mh/s (5s average)</th>
+                <th>mh/s (average)</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td>
+                    <img src="ftc-small_green.png" width="20px" height="20px" alt="Feathercoin logo"/>
+                </td>
+                <td>
+                    <wicket:container wicket:id="mhs5s"/>
+                </td>
+                <td>
+                    <wicket:container wicket:id="mhsav"/>
+                </td>
+
+            </tr>
+            </tbody>
+            <tfoot>
+            <div wicket:id="informationBox">
+                <tr>
+                    <td colspan="2"><img src="ftc-small_red.png" width="20px" height="20px" alt="Feathercoin logo"/></td>
+                    <td>
+                        There were errors for this miner
+                    </td>
+                </tr>
+            </div>
+            <tr class="jsonContainer" style="display: none">
+                <td class="json" colspan="3">
+                    <wicket:container wicket:id="json"/>
+                </td>
+            </tr>
+            </tfoot>
+
+        </table>
+
+
+
+        <table class="summaryGpu" onclick="javascript:toggleJSONVisibility(this);">
+            <caption style="caption-side:top">GPU summary</caption>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>temperature</th>
+                <th>HW</th>
+                <th>mhs5s</th>
+                <th>Enabled</th>
+                <th>Last Share Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div wicket:id="gpuSummaries">
+                <tr>
+                    <td>
+                        <wicket:container wicket:id="gpu"/>
+                    </td>
+                    <td>
+                        <wicket:container wicket:id="status"/>
+                        <img wicket:id = "gpuStatusSign" width="15px" height="15px"/>
+                    </td>
+                    <td>
+                        <wicket:container wicket:id="temperature"/> °C
+                    </td>
+                    <td>
+                        <wicket:container wicket:id="hardwareErrors"/>
+                    </td>
+                    <td>
+                        <wicket:container wicket:id="mhs5s"/> mh/s
+                    </td>
+                    <td>
+                        <wicket:container wicket:id="enabled"/>
+                    </td>
+                    <td>
+                        <wicket:container wicket:id="lastShareTime"/>
+                    </td>
+
+                </tr>
+            </div>
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+                <td colspan="4">&nbsp;</td>
+                <td>
+                    <wicket:container wicket:id="totalGpuHashrate"/> mh/s
+                </td>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+
+            <tr class="jsonContainer" style="display: none">
+                <td class="json" colspan="7">
+                    <wicket:container wicket:id="gpuJson"/>
+                </td>
+            </tr>
+            </tfoot>
+            <!--totalGpuHashrate-->
+
+
+        </table>
+
+
+</wicket:panel>
+</html>
