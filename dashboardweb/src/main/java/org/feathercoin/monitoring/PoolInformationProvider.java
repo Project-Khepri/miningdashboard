@@ -9,6 +9,7 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.feathercoin.monitoring.beans.PoolInfoBean;
 import org.feathercoin.monitoring.dto.D2Response;
 import org.feathercoin.monitoring.dto.GiveMeCoinsResponse;
 import org.feathercoin.monitoring.json.rest.D2JsonRequestExecutor;

@@ -8,6 +8,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.feathercoin.monitoring.beans.SummaryBean;
 import org.feathercoin.monitoring.dto.Dev;
 import org.feathercoin.monitoring.dto.DevResponse;
 import org.feathercoin.monitoring.dto.Summary;

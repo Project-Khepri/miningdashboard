@@ -1,4 +1,4 @@
-package org.feathercoin.monitoring;
+package org.feathercoin.monitoring.config;
 
 public class MinerConnectionConfig {
     private String ip;

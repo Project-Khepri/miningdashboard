@@ -8,28 +8,42 @@
     <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet"/>
 
     <script src="jquery-2.0.3.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <style>
+
+        .chart div {
+            font: 10px sans-serif;
+            background-color: steelblue;
+            text-align: right;
+            padding: 3px;
+            margin: 1px;
+            color: white;
+        }
+    </style>
     <script>
 
-        /*
+
+
         $(document).ready(function() {
             console.log('ready!');
 
-            $( "table.summary" ).click(function( event ) {
-                event.preventDefault();
+            d3.json("/data/graph", function(error, json) {
+                if (error) return console.warn(error);
+                console.log(json);
 
-                $( this).find("tr.jsonContainer").toggle();
+                var x = d3.scale.linear()
+                        .domain([0, d3.max(json.data)])
+                        .range([0, 420]);
 
+                d3.select(".chart")
+                        .selectAll("div")
+                        .data(json.data)
+                        .enter().append("div")
+                        .style("width", function(d) { return x(d) + "px"; })
+                        .text(function(d) { return d; });
             });
-
-            $( "table.summaryGpu" ).click(function( event ) {
-                event.preventDefault();
-
-                $( this).find("tr.jsonContainer").toggle();
-
-            });
-
         });
-        */
 
         function toggleJSONVisibility(paramTest){
             console.log( $( paramTest).find("tr.jsonContainer"));

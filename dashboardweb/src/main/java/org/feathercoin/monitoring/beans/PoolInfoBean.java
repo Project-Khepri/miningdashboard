@@ -1,4 +1,4 @@
-package org.feathercoin.monitoring;
+package org.feathercoin.monitoring.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

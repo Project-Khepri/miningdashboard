@@ -1,4 +1,4 @@
-package org.feathercoin.monitoring;
+package org.feathercoin.monitoring.config;
 
 import java.util.ArrayList;
 import java.util.List;

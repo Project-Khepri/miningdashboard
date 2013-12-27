@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="jquery-2.0.3.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+        $(document).ready(function() {
+            var data = [4, 8, 15, 16, 23, 42];
+            var width = 960,
+                height = 200;
+
+            var y = d3.scale.linear()
+                    .range([height, 0]);
+
+            var chart = d3.select(".chart")
+                    .attr("width", width)
+                    .attr("height", height);
+
+            y.domain([0, d3.max(data, function(d) { return d; })]);
+
+            var barWidth = width / data.length;
+
+            var bar = chart.selectAll("g")
+                    .data(data)
+                    .enter().append("g")
+                    .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+
+            bar.append("rect")
+                    .attr("y", function(d) { return y(d); })
+                    .attr("height", function(d) { return height - y(d); })
+                    .attr("width", barWidth - 1);
+
+            bar.append("text")
+                    .attr("x", barWidth / 2)
+                    .attr("y", function(d) { return y(d) + 3; })
+                    .attr("dy", ".75em")
+                    .text(function(d) { return d; });
+
+            function type(d) {
+                d = +d; // coerce to number
+                return d;
+            }
+
+            var dataCircles = [{"x": 10, "y": 10, "r":10}, {"x": 30, "y": 15, "r":15}];
+            d3.selectAll(".circle")
+                    .selectAll("svg")
+                    .data(dataCircles)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", function(d) { return d.x })
+                    .attr("cy", function(d) { return d.y })
+                    .attr("r", function(d) { return d.r });
+
+
+            var td = d3.selectAll("tbody tr").selectAll("td");
+
+            td.style("color", function(d, i,j) {
+                if (i==0)
+                    return "red";
+                if (j==1)
+                    return "blue";
+            });
+
+            var span = d3.selectAll("tbody tr td").selectAll("span");
+
+            span.style("color", function(d, i,j) {
+                console.log(this.innerHTML);
+                console.log(d);
+                return "yellow";
+            });
+
+
+
+            var matrix = [
+                [ 0,  14,  2,  34],
+                [ 4,  5,  6,  7],
+                [ 8,  9, 10, 1441],
+                [12, 13, 14, 15]
+            ];
+
+
+            d3.select(".tableCreation").selectAll("tr")
+                    .data(matrix)
+                    .enter()
+                    .append("tr")
+                    .selectAll("td")
+                    .data(function(d, i) { return d; })
+                    .enter()
+                    .append("td")
+                    .text(function(d) { return d; });
+
+            /*
+            d3.select("body")
+                    .style("color", "green") // make the body green
+                    .transition()
+                    .delay(3000)
+                    .style("color", "red");
+            */
+
+            d3.json("path/to/file.json", function(error, json) {
+                if (error) return console.warn(error);
+                console.log(json);
+
+            });
+        });
+
+    </script>
+
+
+    <style>
+        .chart rect {
+            fill: steelblue;
+        }
+
+        .chart text {
+            fill: white;
+            font: 10px sans-serif;
+            text-anchor: middle;
+        }
+
+        .circle {
+            fill: none;
+            fill-opacity: .2;
+            stroke: black;
+            stroke-width: 1.5px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+<svg class="chart"></svg>
+
+<svg class="circle"></svg>
+
+<table class="tableCreation"></table>
+
+<table>
+    <thead>
+    <tr><td>  A</td><td>  B</td><td>  C</td><td>  D</td></tr>
+    </thead>
+    <tbody>
+    <tr><td>  0</td><td>  1</td><td>  <span>2</span></td><td>  3</td></tr>
+    <tr><td>  4</td><td>  5</td><td>  6</td><td>  7</td></tr>
+    <tr><td>  8</td><td>  9</td><td> 10</td><td> 11</td></tr>
+    <tr><td> 12</td><td> 13</td><td> 14</td><td> 15</td></tr>
+    </tbody>
+</table>
+
+</body>
+</html>

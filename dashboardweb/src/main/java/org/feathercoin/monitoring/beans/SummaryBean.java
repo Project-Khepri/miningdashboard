@@ -1,4 +1,4 @@
-package org.feathercoin.monitoring;
+package org.feathercoin.monitoring.beans;
 
 import org.feathercoin.monitoring.dto.Dev;
 

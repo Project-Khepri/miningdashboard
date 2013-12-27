@@ -12,6 +12,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.feathercoin.monitoring.beans.SummaryBean;
 import org.feathercoin.monitoring.dto.Dev;
 
 import java.io.Serializable;

@@ -26,7 +26,7 @@ public class WicketApplication extends WebApplication
     public void init()
     {
         super.init();
-
+        mountPage("/data/graph",JsonWebPage.class);
 
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
     }

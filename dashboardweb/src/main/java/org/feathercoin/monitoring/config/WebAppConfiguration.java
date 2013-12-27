@@ -1,5 +1,6 @@
-package org.feathercoin.monitoring;
+package org.feathercoin.monitoring.config;
 
+import org.feathercoin.monitoring.MinerConnections;
 import org.feathercoin.monitoring.json.JsonResponseTransformer;
 import org.feathercoin.monitoring.json.MinerUdpCall;
 import org.springframework.context.annotation.Bean;
