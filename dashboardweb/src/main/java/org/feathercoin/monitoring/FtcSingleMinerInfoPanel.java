@@ -14,6 +14,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.feathercoin.monitoring.beans.SummaryBean;
 import org.feathercoin.monitoring.dto.Dev;
+import org.feathercoin.monitoring.util.AddLabelArrayUtil;
+import org.feathercoin.monitoring.util.LastShareTimeConverter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -62,11 +64,12 @@ public class FtcSingleMinerInfoPanel extends Panel implements Serializable{
 
                 @Override
                 protected void populateItem(Item<Dev> itemInner) {
-                    String[] labels = {"gpu","temperature","hardwareErrors","mhs5s",
-                            "lastShareTime","enabled","status"};
-                    for (String label : labels) {
-                        itemInner.add(new Label(label, new PropertyModel(itemInner.getModel(), label)));
-                    }
+                    AddLabelArrayUtil.addLabels(itemInner,"gpu","temperature","hardwareErrors","mhs5s","enabled","status");
+                    addLastShareTime(itemInner);
+                    addStatusInfo(itemInner);
+                }
+
+                private void addStatusInfo(Item<Dev> itemInner) {
                     String status = itemInner.getModel().getObject().getStatus();
                     String picture = "ftc-small_green.png";
                     if ("Alive".equalsIgnoreCase(status) || "Sick".equalsIgnoreCase(status)){
@@ -77,6 +80,11 @@ public class FtcSingleMinerInfoPanel extends Panel implements Serializable{
                         picture = "ftc-small_orange.png";
                     }
                     itemInner.add(new Image("gpuStatusSign",new PackageResourceReference(HomePage.class, picture)));
+                }
+
+                private void addLastShareTime(Item<Dev> itemInner) {
+                    itemInner.add(new Label("lastShareTime",
+                            LastShareTimeConverter.convertShareTime(itemInner.getModel().getObject().getLastShareTime())));
                 }
             } );
 

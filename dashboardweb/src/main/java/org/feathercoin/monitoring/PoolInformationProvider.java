@@ -14,6 +14,7 @@ import org.feathercoin.monitoring.dto.D2Response;
 import org.feathercoin.monitoring.dto.GiveMeCoinsResponse;
 import org.feathercoin.monitoring.json.rest.D2JsonRequestExecutor;
 import org.feathercoin.monitoring.json.rest.GiveMeCoinsJsonRequestExecutor;
+import org.feathercoin.monitoring.util.AddLabelArrayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -94,10 +95,7 @@ public class PoolInformationProvider implements Serializable{
                 singlePoolInfo.setVisible(true);
                 item.add(singlePoolInfo);
 
-                String[] labels = {"payoutHistory","totalHashrate","roundEstimate","confirmedRewards"};
-                for (String label : labels) {
-                    singlePoolInfo.add(new Label(label, new PropertyModel(item.getModel(), label)));
-                }
+                AddLabelArrayUtil.addLabels(item,singlePoolInfo,"payoutHistory","totalHashrate","roundEstimate","confirmedRewards");
             }
 
             @Override
