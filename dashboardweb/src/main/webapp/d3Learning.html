@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="jquery-2.0.3.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+
+        $(document).ready(function() {
+            var testFunction = function(testArg){
+                console.log("testArg" +testArg);
+            }
+
+            //selectAll divs and set style
+            d3.selectAll(".example1")
+                    .attr("style","width:100px;color:green");
+
+            //select 1st div
+            d3.select(".example1")
+                    .attr("style","width:100px;color:black;background:#EAEAEA");
+
+            //change the text
+            d3.selectAll(".example1")
+                    .text(function(d,i) {
+                        console.log("i: "+i+ " this:"+this);
+                        return "dummyText"+i});
+
+            //append a style
+            var data = [50, 80, 30];
+            d3.selectAll(".example1")
+                    .data(data)
+                    .attr("style", function(d) {
+                        console.log("d: "+d+ " this:"+this);
+                        console.log(d3.select(this).attr("style"));
+
+                        return d3.select(this).attr("style")+";height:"+d + "px";
+                    });
+
+            //cleaner way to change the style
+            d3.select(".example2")
+                    .style({
+                        'width':'300px',
+                        'color':'black',
+                        'background':'#EAEAEA'
+                    });
+
+            //appends a span in the div
+            d3.select(".example2")
+                    .append("span")
+                    .style({'margin-left':'50px'})
+                    .text("spantext");
+
+            //removes the 3rd element from the divs
+            d3.selectAll(".example3")
+                    .each(function(d,i){
+                        console.log(i+ " "+this);
+                        if (i==2)
+                            d3.select(this).remove();
+                    });
+
+
+            var matrix = [
+                [11975,  5871, 8916, 2868],
+                [ 1951, 10048, 2060, 6171],
+                [ 8010, 16145, 8090, 8045],
+                [ 1013,   990,  940, 6907]
+            ];
+
+            //binds a matrix row to a tr element
+            var tr = d3.select("body").append("table")
+                    .attr("class","testTable")
+                    .selectAll("tr")
+                    .data(matrix)
+                    .enter().append("tr");
+
+            //data is used from bound tr data
+            var td = tr.selectAll("td")
+                    .data(function(d) {
+                        console.log(d);
+                        return d; })
+                    .enter().append("td")
+                    .text(function(d) { return d; });
+
+            var testFoo = function foo(selection,testArg) {
+                console.log("test:" + testArg)
+                selection
+                        .attr("style", "width:200px;");
+            }
+
+            d3.selectAll(".example4")
+                    .call(testFoo,"dummy");
+
+            var ip =  d3.interpolateNumber(100, 200);
+            console.log(ip(0.3));
+
+            console.log(d3.extent([100,20,40]));
+            console.log(d3.keys({"name":40,"surname":40}));
+            console.log(d3.values({"name":40,"surname":40}));
+            console.log(d3.entries({"name":40,"surname":40}));
+
+            var map = d3.map();
+            map.set("test",100);
+            map.set("test2",300);
+            console.log(map.get("test"));
+
+            map.forEach(function(k,v){
+                console.log("key:"+k+" value:"+v);
+            })
+
+            console.log(d3.range(0,104,5));
+
+            //Maps to create an axis
+            var axis = d3.scale.linear()
+                    .domain([0,100,200])
+                    .range([0,30,80]);
+            console.log(axis(10));
+            console.log(axis.ticks());
+
+
+            var axis2 = d3.scale.log()
+                    .domain([10,100])
+                    .range([0,5]);
+            console.log(axis2(15));
+            console.log(axis2.ticks());
+
+
+            color = d3.scale.ordinal()
+                    .range(["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2"])
+                    .domain(d3.range(0,7));
+            d3.range(0,7).forEach(function(d){ console.log(color(d)); })
+
+            lettersToMap = ['A','B','C','D','E'];
+            testX = d3.scale.ordinal()
+                    .domain(lettersToMap)
+                    .rangeRoundBands([0, 100], 0.1, 0.05);
+            console.log(testX.rangeBand());
+            lettersToMap.forEach(function(value){
+                console.log("{"+testX(value)+";"+(testX(value)+testX.rangeBand())+"}");
+            });
+
+            var line = d3.svg.line()
+                    .x(function(d) {
+                        console.log(d.x)
+                        return d.x; })
+                    .y(function(d) { return d.y; })
+                    .interpolate("basis"); //linear
+
+            var lineData = [ { "x": 1,   "y": 5},  { "x": 20,  "y": 20},
+                                 { "x": 40,  "y": 10}, { "x": 60,  "y": 40},
+                                 { "x": 80,  "y": 5},  { "x": 100, "y": 60}];
+            d3.select("#testLine")
+                    .attr("d", line(lineData));
+
+            var days = d3.time.days(new Date(2013, 11, 1), new Date(2013, 11, 31),1);
+            console.log(days);
+            format = d3.time.format("%d");
+            days.forEach(function(day){
+                console.log("day: "+format(day));
+            });
+
+
+            var margin = {top: 10, right: 10, bottom: 20, left: 30},
+                    width = 960 - margin.left - margin.right,
+                    height = 400 - margin.top - margin.bottom
+                    ;
+
+
+
+
+            var x = d3.time.scale()
+                    .domain([new Date(2013, 11, 1), new Date(2013, 11, 11)])
+                    .rangeRound([0, width]);
+
+
+            var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .orient("bottom")
+                    .ticks(d3.time.days,1)
+                    .tickSize(5, 10)
+                    .tickFormat(d3.time.format("%d.%m"));
+
+
+            var y = d3.scale.linear()
+                    .domain([0,100])
+                    .range([height,0])
+
+            var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left")
+                    .tickSize(5, 10)
+                    .tickFormat(d3.format("^f"));
+
+
+            var svg = d3.select("body").append("svg")
+                    .attr("width", width + margin.left + margin.right+50)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                    .selectAll(".tick text")
+                    .style("text-anchor", "start")
+                    .attr("x", 2)
+                    .attr("y", 2);
+
+            svg.append("g")
+                    .attr("class", "y axis")
+                    .attr("transform", "translate(0," + 0 + ")")
+                    .call(yAxis)
+                    .selectAll(".tick text")
+                    .style("text-anchor", "start")
+                    .attr("x", -30)
+                    .attr("y", 2);
+
+            var dailyFtcEarnings = [80,70,90,100,30,40,60,80,70,50];
+            var ftcDays= d3.time.days(new Date(2013, 11, 1), new Date(2013, 11, 11),1)
+
+            dailyFtcEarningsOrdning = d3.scale.ordinal()
+                    .domain(ftcDays)
+                    .rangeRoundBands([0, width], 0.1, 0.05);
+            console.log(dailyFtcEarningsOrdning.rangeBand());
+
+            var yValues = d3.scale.linear()
+                    .range([height, 0]);
+            yValues.domain([0, d3.max(dailyFtcEarnings, function(d) { return d; })]);
+
+            ftcDays.forEach(function(value){
+                console.log("{"+dailyFtcEarningsOrdning(value)+";"+(dailyFtcEarningsOrdning(value)+dailyFtcEarningsOrdning.rangeBand())+"}");
+
+            });
+
+            svg.selectAll(".bar")
+                    .data(dailyFtcEarnings)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d,i) {
+                        return dailyFtcEarningsOrdning(ftcDays[i]); })
+                    .attr("y", function(d) { return yValues(d); })
+                    .attr("height", function(d) { return height - yValues(d); })
+                    .attr("width", dailyFtcEarningsOrdning.rangeBand())
+
+
+        });
+
+    </script>
+
+    <style>
+        div.example1{
+            background: yellow;
+        }
+
+        table.testTable{
+            color: green;
+        }
+
+        .axis text {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .y.axis line {
+            stroke: #777;
+        }
+
+        .bar {
+            stroke: #777;
+            fill:blue;
+            fill-opacity:0.3;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+    <div class="example1">Test1</div>
+    <div class="example1">Test2</div>
+    <div class="example1">Test3</div>
+
+    <div class="example2">e2.Test1</div>
+
+    <div class="example3">e3.Test1</div>
+    <div class="example3">e3.Test2</div>
+    <div class="example3">e3.Test3</div>
+
+    <div class="example4">e4.Test1</div>
+    <div class="example4">e4.Test2</div>
+    <div class="example4">e4.Test3</div>
+
+    <svg width="400px" height="400px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path id="testLine" stroke="black" fill="transparent"></path>
+
+    </svg>
+
+</body>
+</html>

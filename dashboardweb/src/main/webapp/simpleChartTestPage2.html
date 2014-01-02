@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="jquery-2.0.3.min.js"></script>
+    <script src="time-series-chart.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <style>
+
+
+        .line {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1.5px;
+        }
+
+        .area {
+            fill: #969696;
+        }
+
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            console.log('ready!');
+
+
+            /*
+            var chartTS = timeSeriesChart()
+                    .x(function(d) { return formatDate.parse(d.date); })
+                    .y(function(d) { return +d.price; });
+            */
+
+            var chartTS = timeSeriesChart()
+                    .x(function(d) { return d.name; })
+                    .y(function(d) { return +d.value; });
+
+            var formatDate = d3.time.format("%b %Y");
+
+            d3.json("http://localhost:8080/data/graph", function(error, json) {
+                d3.select("#example")
+                        .data([json.data])
+                        .call(chartTS);
+            });
+
+
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <p id="example">
+</body>
+</html>

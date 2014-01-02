@@ -13,5 +13,11 @@
     <name>miningdata</name>
     <url>http://maven.apache.org</url>
 
+    <dependencies>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
 
+    </dependencies>
 </project>
