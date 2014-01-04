@@ -7,21 +7,28 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>miningdata</artifactId>
+    <artifactId>batch</artifactId>
     <packaging>jar</packaging>
 
-    <name>miningdata</name>
+    <name>batch</name>
     <url>http://maven.apache.org</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <dependencies>
+
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
+            <groupId>org.feathercoin.monitoring</groupId>
+            <artifactId>miningdata</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
+            <groupId>org.feathercoin.monitoring</groupId>
+            <artifactId>mining</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

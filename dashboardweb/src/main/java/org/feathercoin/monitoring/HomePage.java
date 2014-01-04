@@ -2,10 +2,13 @@ package org.feathercoin.monitoring;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxLazyLoadPanel;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.feathercoin.monitoring.config.ChartConfiguration;
 import org.feathercoin.monitoring.config.FtcConfiguration;
 import org.feathercoin.monitoring.json.rest.FTCJsonRequestExecutor;
 
@@ -17,11 +20,11 @@ import java.util.Date;
 public class HomePage extends WebPage {
     private static final long serialVersionUID = 1L;
 
-    @SpringBean
-    private PoolInformationProvider poolInformationProvider;
+    @SpringBean private PoolInformationProvider poolInformationProvider;
     @SpringBean private FTCJsonRequestExecutor ftcJsonRequestExecutor;
     @SpringBean private MinerConnections miners;
     @SpringBean private FtcConfiguration ftcConfiguration;
+    @SpringBean private ChartConfiguration chartConfiguration;
 
 
 	public HomePage(final PageParameters parameters) {
@@ -65,6 +68,18 @@ public class HomePage extends WebPage {
 
         });
 
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response)
+    {
+        super.renderHead(response);
+        if (chartConfiguration.isChartEnabled()){
+            response.render(OnDomReadyHeaderItem.forScript("$(document).ready(function() {\n" +
+                    "            console.log('ready!');\n" +
+                    "            renderChart();\n" +
+                    "        });"));
+        }
     }
 
     private String calculateRefreshTimeInMillisecondsAndSeconds(Date refreshStart, Date lastRefresh) {

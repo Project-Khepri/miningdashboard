@@ -1,18 +1,17 @@
 package org.feathercoin.monitoring.config;
 
 import org.feathercoin.monitoring.MinerConnections;
+import org.feathercoin.monitoring.MonitoringPropertiesHelper;
 import org.feathercoin.monitoring.json.JsonResponseTransformer;
 import org.feathercoin.monitoring.json.MinerUdpCall;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -20,20 +19,7 @@ public class WebAppConfiguration {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties(){
-        PropertySourcesPlaceholderConfigurer pspc =
-                new PropertySourcesPlaceholderConfigurer();
-        ArrayList<Resource> properties = new ArrayList<Resource>();
-        properties.add(new ClassPathResource( "/defaultAppConfig.properties" ));
-
-        ClassPathResource privateAppConfig = new ClassPathResource("/myAppConfig.properties");
-        if (privateAppConfig.exists())
-            properties.add(privateAppConfig);
-
-        pspc.setLocations( properties.toArray(new Resource[]{}) );
-        pspc.setNullValue("@null");
-
-        pspc.setIgnoreUnresolvablePlaceholders( true );
-        return pspc;
+        return MonitoringPropertiesHelper.properties();
     }
 
     @Bean

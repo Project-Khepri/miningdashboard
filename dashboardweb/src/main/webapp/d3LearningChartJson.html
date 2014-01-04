@@ -20,7 +20,7 @@
                 var maxEarnings = d3.max(json, function(d) { return d.dailyProduction; })+10;
 
                 var margin = {top: 10, right: 10, bottom: 20, left: 30},
-                        width = 1000 - margin.left - margin.right,
+                        width = 900 - margin.left - margin.right,
                         height = 300 - margin.top - margin.bottom
                         ;
 
@@ -137,6 +137,12 @@
             stroke: #777;
             fill:blue;
             fill-opacity:0.3;
+        }
+
+        .valueInChart {
+            fill: lightgray;
+            font: 8px sans-serif;
+            text-anchor: middle;
         }
 
 
