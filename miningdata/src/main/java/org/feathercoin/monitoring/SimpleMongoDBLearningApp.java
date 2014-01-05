@@ -1,6 +1,7 @@
 package org.feathercoin.monitoring;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoURI;
 import com.mongodb.ServerAddress;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,7 +41,9 @@ public class SimpleMongoDBLearningApp
         seeds.add(new ServerAddress("192.168.188.51", 27017));
         seeds.add(new ServerAddress("192.168.188.51", 27018));
 
-        Mongo mongo = new Mongo(seeds);
+
+
+        Mongo mongo = new Mongo(new MongoURI("mongodb://192.168.188.40:27017,192.168.188.40:27018,192.168.188.51:27017,192.168.188.51:27018"));
 
         MongoTemplate mongoTemplate = new MongoTemplate(mongo, "database");
         ClassPathXmlApplicationContext applicationContext =
@@ -48,10 +51,10 @@ public class SimpleMongoDBLearningApp
         mongoTemplate.setApplicationContext(applicationContext);
         MongoOperations mongoOps =  mongoTemplate;
 
-        mongoOps.dropCollection("feathercoinDailyMiningData");
+        //mongoOps.dropCollection("feathercoinDailyMiningData");
+        //insertData(mongoOps);
 
 
-        insertData(mongoOps);
         TypedAggregation<FeathercoinDailyMiningData> agg = newAggregation(FeathercoinDailyMiningData.class,
                 match(where("fetchTime").gte(sdf.parse("2013-12-01")).lte(sdf.parse("2013-12-31"))),
                 group("fetchTime").max("dailyProduction").as("dailyProduction"),
@@ -136,8 +139,8 @@ public class SimpleMongoDBLearningApp
                 //mongoOps.dropCollection("person");
 
 
-        FeathercoinStatsService feathercoinStatsService = applicationContext.getBean(FeathercoinStatsService.class);
-        feathercoinStatsService.updateDailyProduction(BigDecimal.valueOf(5278.773));
+        //FeathercoinStatsService feathercoinStatsService = applicationContext.getBean(FeathercoinStatsService.class);
+        //feathercoinStatsService.updateDailyProduction(BigDecimal.valueOf(5278.773));
 
         FeathercoinDailyMiningData data = repository.getLatestMiningDataEntry();
         System.out.println(data);

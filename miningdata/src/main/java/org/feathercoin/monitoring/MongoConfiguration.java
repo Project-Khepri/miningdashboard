@@ -2,17 +2,19 @@ package org.feathercoin.monitoring;
 
 
 import com.mongodb.Mongo;
-import com.mongodb.ServerAddress;
+import com.mongodb.MongoURI;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Configuration
 @EnableMongoRepositories
+@PropertySource({"classpath:defaultAppConfig.properties", "classpath:myAppConfig.properties"})
 class MongoConfiguration extends AbstractMongoConfiguration {
+    @Value("${mongo.dburl}") String mongoDbUrl;
+
 
     @Override
     protected String getDatabaseName() {
@@ -21,12 +23,7 @@ class MongoConfiguration extends AbstractMongoConfiguration {
 
     @Override
     public Mongo mongo() throws Exception {
-        List<ServerAddress> seeds = new ArrayList<ServerAddress>();
-        seeds.add(new ServerAddress("192.168.188.40", 27017));
-        seeds.add(new ServerAddress("192.168.188.40", 27018));
-        seeds.add(new ServerAddress("192.168.188.51", 27017));
-        seeds.add(new ServerAddress("192.168.188.51", 27018));
-        return new Mongo(seeds);
+        return new Mongo(new MongoURI(mongoDbUrl));
     }
 
     @Override

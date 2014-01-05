@@ -23,7 +23,7 @@ public class UpdateDailyProductionDataApp {
         GiveMeCoinsResponse giveMeCoinsResponse = fetchGiveMeCoinsPoolInfo(poolInformationProvider);
 
         BigDecimal totalPayout = d2Response.getPayoutHistory().add(giveMeCoinsResponse.getPayoutHistory());
-
+        log.debug("update dailyProduction with totalPayout "+totalPayout);
         service.updateDailyProduction(totalPayout);
 
     }
