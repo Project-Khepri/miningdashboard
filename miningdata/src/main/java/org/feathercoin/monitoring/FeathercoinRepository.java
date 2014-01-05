@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,13 +39,17 @@ public class FeathercoinRepository {
     public WriteResult updateDailyProductionAndTotalCoinsMined(String id, BigDecimal dailyProduction, BigDecimal totalCoinsMined){
         Query query = new Query(where("id").is(id));
         WriteResult writeResult = mongoTemplate.updateFirst(query,
-                update("dailyProduction", dailyProduction.doubleValue())
-                .set("totalCoinsMined",totalCoinsMined.doubleValue()), FeathercoinDailyMiningData.class);
+                update("dailyProduction", scaleTo3(dailyProduction).doubleValue())
+                .set("totalCoinsMined", scaleTo3(totalCoinsMined).doubleValue()), FeathercoinDailyMiningData.class);
         return writeResult;
     }
 
     public void insertDailyProductionEntry(FeathercoinDailyMiningData feathercoinDailyMiningData){
         mongoTemplate.insert(feathercoinDailyMiningData);
+    }
+
+    private BigDecimal scaleTo3(BigDecimal toRound){
+        return toRound.setScale(3,RoundingMode.HALF_UP);
     }
 
     public List<MiningStats> getMiningStats(Interval interval){
@@ -56,7 +61,7 @@ public class FeathercoinRepository {
 
         List<MiningStats> miningDatas = new ArrayList<MiningStats>();
         for (MiningDataValueObject miningDataValueObject : results) {
-            miningDatas.add(new MiningStats(BigDecimal.valueOf(miningDataValueObject.getValue()),
+            miningDatas.add(new MiningStats(scaleTo3(BigDecimal.valueOf(miningDataValueObject.getValue())),
                     miningDataValueObject.getId()));
         }
 

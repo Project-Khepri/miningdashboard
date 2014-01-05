@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -91,6 +92,10 @@ public class FeathercoinStatsService {
             }
             return newDailyProduction;
         }
+    }
+
+    private BigDecimal scaleTo3(BigDecimal toRound){
+        return toRound.setScale(3, RoundingMode.HALF_UP);
     }
 
     private FeathercoinDailyMiningData createDefaultMiningDataEntry(BigDecimal totalPayoutHistory, DateTime today) {

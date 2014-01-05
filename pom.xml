@@ -29,6 +29,7 @@
         <module>dashboardweb</module>
         <module>miningdata</module>
         <module>batch</module>
+        <module>batchScheduler</module>
     </modules>
     <name>miningdashboard</name>
 	<description></description>

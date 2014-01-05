@@ -1,6 +1,7 @@
 package org.feathercoin.monitoring;
 
 import com.mongodb.Mongo;
+import com.mongodb.ServerAddress;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.feathercoin.monitoring.domain.FeathercoinDailyMiningData;
@@ -17,6 +18,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,8 +33,16 @@ public class SimpleMongoDBLearningApp
     public static void main(String[] args) throws Exception {
 
         //MongoOperations mongoOps = new MongoTemplate(new Mongo("192.168.188.40"), "database");
-        MongoTemplate mongoTemplate = new MongoTemplate(new Mongo("localhost"), "database");
-        //MongoTemplate mongoTemplate = new MongoTemplate(new Mongo("192.168.188.40"), "database");
+        //MongoTemplate mongoTemplate = new MongoTemplate(new Mongo("localhost"), "database");
+        List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+        seeds.add(new ServerAddress("192.168.188.40", 27017));
+        seeds.add(new ServerAddress("192.168.188.40", 27018));
+        seeds.add(new ServerAddress("192.168.188.51", 27017));
+        seeds.add(new ServerAddress("192.168.188.51", 27018));
+
+        Mongo mongo = new Mongo(seeds);
+
+        MongoTemplate mongoTemplate = new MongoTemplate(mongo, "database");
         ClassPathXmlApplicationContext applicationContext =
                 new ClassPathXmlApplicationContext("/org/feathercoin/monitoring/dataApplicationContext.xml");
         mongoTemplate.setApplicationContext(applicationContext);
@@ -169,6 +179,7 @@ public class SimpleMongoDBLearningApp
 
                     new FeathercoinDailyMiningData(BigDecimal.valueOf(90.357),BigDecimal.valueOf(5176.857),sdf.parse("2014-01-02")),
                     new FeathercoinDailyMiningData(BigDecimal.valueOf(47.532),BigDecimal.valueOf(5176.857+47.532+54.384-53.532),sdf.parse("2014-01-03")),
+                    new FeathercoinDailyMiningData(BigDecimal.valueOf(85.325),BigDecimal.valueOf(5176.857+47.532+54.384-53.532+85.325),sdf.parse("2014-01-04")),
             };
             //53.532
             for (FeathercoinDailyMiningData feathercoinDailyMiningData : toInsert) {

@@ -18,7 +18,7 @@
     <script>
 
         function renderChart(){
-            d3.json("http://localhost:8080/data/graph", function(error, json) {
+            d3.json(document.URL.substr(0,document.URL.lastIndexOf("/"))+"/data/graph", function(error, json) {
                 if (error) return console.warn(error);
                 console.log(json);
 
