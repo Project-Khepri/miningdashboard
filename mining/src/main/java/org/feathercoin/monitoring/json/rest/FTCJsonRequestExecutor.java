@@ -1,6 +1,5 @@
 package org.feathercoin.monitoring.json.rest;
 
-import org.feathercoin.monitoring.json.rest.AbstractJsonRequestExecutor;
 import org.feathercoin.monitoring.CurrencyValueFormatter;
 import org.feathercoin.monitoring.dto.FtcBalanceResponse;
 import org.feathercoin.monitoring.dto.FtcDifficultyResponse;
@@ -13,6 +12,15 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
+/**
+ * JSON request executor for the <a href="https://api.feathercoin.com">Feathercoin JSON API</a>. API URLs have to be provided via
+ * <ul>
+ * <li>ftcapi.domain - Domain for the feathercoin api (is prefix for all provided URLs)</li>
+ * <li>ftcapi.json.balance.url - JSON URL to fetch the balance for a given FTC address ({address}). E.g. ?output=balance&address={address}&json=1</li>
+ * <li>ftcapi.json.difficulty.url - JSON URL to fetch the current difficulty</li>
+ * <li>ftcapi.json.ftc_usd.url - JSON URL to fetch to USD value for a given FTC amount ({amount}). E.g ?output=usd&amount={amount}&json=1</li>
+ * </ul>
+ */
 @Component
 public class FTCJsonRequestExecutor extends AbstractJsonRequestExecutor implements Serializable{
     @Value("${ftcapi.json.balance.url}")

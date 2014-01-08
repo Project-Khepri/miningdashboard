@@ -1,16 +1,4 @@
-package org.feathercoin.monitoring.json;/*
- *
- * Copyright (C) Andrew Smith 2012-2013
- *
- * Usage: java API command ip port
- *
- * If any are missing or blank they use the defaults:
- *
- *	command = 'summary'
- *	ip	= '127.0.0.1'
- *	port	= '4028'
- *
- */
+package org.feathercoin.monitoring.json;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,6 +9,13 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * MinerUdpCall handles the communication to a miner via the UDP protocol (assuming you're using cgminer).
+ * CGMiner have to be configured to allow UDP calls. E.g. via command line parameters --api-listen --api-network (for
+ * more details please check the <a href="https://github.com/ckolivas/cgminer">cgminer online documentation)</a>.
+ *
+ * All possible parameters are described in the cgminer documentation too.
+ */
 public class MinerUdpCall implements Serializable
 {
     static private final int MAXRECEIVESIZE = 65535;
@@ -43,6 +38,13 @@ public class MinerUdpCall implements Serializable
         }
     }
 
+    /**
+     * Executes a UDP call with the given command
+     * @param cmd A command to be passed via UDP to your cgminer (see cgminer documentation for details on possible
+     *            commands)
+     * @return String - result of the UDP call
+     * @throws java.lang.RuntimeException for any failing UDP call
+     */
     public String process(String cmd)
     {
         StringBuilder sb = new StringBuilder();
@@ -81,10 +83,18 @@ public class MinerUdpCall implements Serializable
         return result.substring(0,result.lastIndexOf("}")+1);
     }
 
+    /**
+     * Default constructor - necessary for Serialization/Deserialization
+     */
     public MinerUdpCall(){
 
     }
 
+    /**
+     *
+     * @param _ip Ip to connect to your cgminer
+     * @param _port Port to connect to your cgminer (default is port 4028)
+     */
     public MinerUdpCall(String _ip, int _port)
     {
 
