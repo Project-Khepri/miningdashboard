@@ -12,6 +12,9 @@ import org.springframework.web.client.RestTemplate;
 import java.io.Serializable;
 import java.util.Map;
 
+/**
+ * Class to execute JSON requests using springs REST template abstraction
+ */
 public class JsonRequestExecutor implements Serializable {
     private String protocol;
     private int port;
@@ -63,7 +66,15 @@ public class JsonRequestExecutor implements Serializable {
         return executeJsonRequest(getDomain(),url,vars);
     }
 
-    public String executeJsonRequest(String domain,String url, Map vars){
+    /**
+     * Executes the JSON request
+     * @param domain Domain to execute the request against
+     * @param url The URL part following the domain
+     * @param vars Map Name,Value pairs for replacements in the URL
+     * @return Json response as string
+     * @throws org.springframework.web.client.RestClientException if Json request failed
+     */
+    public String executeJsonRequest(String domain,String url, Map<String,?> vars){
         HttpHost targetHost = new HttpHost(domain, getPort(), getProtocol());
         HttpComponentsClientHttpRequestFactoryBasicAuth httpComponentsClientHttpRequestFactory = new HttpComponentsClientHttpRequestFactoryBasicAuth(targetHost);
 

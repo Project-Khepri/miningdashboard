@@ -36,6 +36,11 @@ public class FTCJsonRequestExecutor extends AbstractJsonRequestExecutor implemen
     private String DOMAIN;
 
 
+    /**
+     * Retrieve current amount of feathercoins for the given feathercoin address
+     * @param ftcAddress FTC address to fetch data for
+     * @return FtcBalanceResponse with the current balance for the address
+     */
     public FtcBalanceResponse fetchCurrentBalance(String ftcAddress){
 
         HashMap<String,String> vars = new HashMap<String, String>();
@@ -49,6 +54,10 @@ public class FTCJsonRequestExecutor extends AbstractJsonRequestExecutor implemen
         return ftcBalanceResponseJsonResponseTransformer.transform(response);
     }
 
+    /**
+     * Fetches the current FTC network difficulty
+     * @return FtcDifficultyResponse with the current network difficulty
+     */
     public FtcDifficultyResponse fetchCurrentDifficulty(){
 
         HashMap<String,String> vars = new HashMap<String, String>();
@@ -61,6 +70,11 @@ public class FTCJsonRequestExecutor extends AbstractJsonRequestExecutor implemen
         return ftcDifficultyResponseJsonResponseTransformer.transform(response);
     }
 
+    /**
+     * Fetches the current value in USD for the given amount of FTCs
+     * @param amount Amount of FTCs to calculate the $value for
+     * @return FtcValueResponse with the according value in $
+     */
     public FtcValueResponse fetchCurrentUsdValue(BigDecimal amount){
 
         HashMap<String,String> vars = new HashMap<String, String>();

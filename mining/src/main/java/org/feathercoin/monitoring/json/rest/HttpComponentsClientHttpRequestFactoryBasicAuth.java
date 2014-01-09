@@ -12,6 +12,9 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import java.io.Serializable;
 import java.net.URI;
 
+/**
+ * Utility class to configure the way the authentication is done. It called inside the spring rest template
+ */
 public class HttpComponentsClientHttpRequestFactoryBasicAuth
         extends HttpComponentsClientHttpRequestFactory implements Serializable{
     HttpHost host;
