@@ -9,8 +9,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.feathercoin.monitoring.config.ChartConfiguration;
-import org.feathercoin.monitoring.config.FtcConfiguration;
-import org.feathercoin.monitoring.json.rest.FTCJsonRequestExecutor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -20,12 +18,7 @@ import java.util.Date;
 public class HomePage extends WebPage {
     private static final long serialVersionUID = 1L;
 
-    @SpringBean private PoolInformationProvider poolInformationProvider;
-    @SpringBean private FTCJsonRequestExecutor ftcJsonRequestExecutor;
-    @SpringBean private MinerConnections miners;
-    @SpringBean private FtcConfiguration ftcConfiguration;
     @SpringBean private ChartConfiguration chartConfiguration;
-
 
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
@@ -36,14 +29,12 @@ public class HomePage extends WebPage {
         add(new Label("lastRefresh",sdf.format(lastRefresh)));
         add(new Label("refreshTime",calculateRefreshTimeInMillisecondsAndSeconds(refreshStart,lastRefresh)));
 
-
-
         add(new AjaxLazyLoadPanel("lazyLoadFtcMarketValues")
         {
             @Override
             public Component getLazyLoadComponent(String id)
             {
-                return new FtcValuePanel(id,ftcJsonRequestExecutor,ftcConfiguration.getFtcAddress());
+                return new FtcValuePanel(id);
             }
 
         });
@@ -53,7 +44,7 @@ public class HomePage extends WebPage {
             @Override
             public Component getLazyLoadComponent(String id)
             {
-                return new FtcPoolsPanel(id,poolInformationProvider);
+                return new FtcPoolsPanel(id);
             }
 
         });
@@ -63,7 +54,7 @@ public class HomePage extends WebPage {
             @Override
             public Component getLazyLoadComponent(String id)
             {
-                return new FtcMinerInfoPanel(id,miners);
+                return new FtcMinerInfoPanel(id);
             }
 
         });

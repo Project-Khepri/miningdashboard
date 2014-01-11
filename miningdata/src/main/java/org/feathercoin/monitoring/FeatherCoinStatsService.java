@@ -6,12 +6,13 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
 @Service
-public class FeathercoinStatsService {
+public class FeathercoinStatsService implements Serializable{
     @Autowired FeathercoinRepository feathercoinRepository;
     @Autowired GapFillerUtil gapFillerUtil;
 

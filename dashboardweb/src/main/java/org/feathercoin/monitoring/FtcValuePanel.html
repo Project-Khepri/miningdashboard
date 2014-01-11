@@ -14,6 +14,33 @@
         <span class="label">Current difficulty:</span> <span class="value"><wicket:container wicket:id="ftcDifficulty"/></span>
     </div>
 
+
+    <div class="labelValuePair">
+        <span class="label">Coins/d:</span> <span class="value"><wicket:container wicket:id="ftcCoinsPerDay"/></span>
+    </div>
+
+    <div class="labelValuePair">
+        <span class="label">Revenue/d:</span> <span class="value">$<wicket:container wicket:id="ftcRevenuePerDay"/></span>
+    </div>
+
+    <div class="labelValuePair">
+        <span class="label">Power cost/d:</span> <span class="value">$<wicket:container wicket:id="ftcPowerCostsPerDay"/></span>
+        <span class="extension">(<wicket:container wicket:id="ftcPowerConsumption"/>W;$<wicket:container wicket:id="ftcElectricityRate"/>)</span>
+    </div>
+
+
+    <div class="labelValuePair">
+        <span class="label">Net Revenue/d:</span> <span class="value">$<wicket:container wicket:id="ftcNetRevenuePerDay"/></span>
+    </div>
+
+
+    <div class="labelValuePair">
+        <span class="label">Hardware break even:</span>
+        <span class="value"><wicket:container wicket:id="ftcHardwareBreakEvenInDays"/>d</span>
+        <span class="extension">($<wicket:container wicket:id="ftcHardwareCosts"/>)</span>
+    </div>
+
+
     <div class="labelValuePair">
         <img src="featherCoinAddressQR.png" width="125px" height="125px" alt="Feathercoin Address"/>
     </div>

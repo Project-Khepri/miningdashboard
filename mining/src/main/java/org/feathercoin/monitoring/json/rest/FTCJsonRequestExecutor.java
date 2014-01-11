@@ -3,6 +3,7 @@ package org.feathercoin.monitoring.json.rest;
 import org.feathercoin.monitoring.CurrencyValueFormatter;
 import org.feathercoin.monitoring.dto.FtcBalanceResponse;
 import org.feathercoin.monitoring.dto.FtcDifficultyResponse;
+import org.feathercoin.monitoring.dto.FtcStatsResponse;
 import org.feathercoin.monitoring.dto.FtcValueResponse;
 import org.feathercoin.monitoring.json.JsonResponseTransformer;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,9 @@ public class FTCJsonRequestExecutor extends AbstractJsonRequestExecutor implemen
 
     @Value("${ftcapi.json.ftc_usd.url}")
     private String JSON_FTC_USD;
+
+    @Value("${ftcapi.json.ftc_stats.url}")
+    private String JSON_FTC_STATS;
 
     @Value("${ftcapi.domain}")
     private String DOMAIN;
@@ -86,5 +90,20 @@ public class FTCJsonRequestExecutor extends AbstractJsonRequestExecutor implemen
                 new JsonResponseTransformer<FtcValueResponse>(FtcValueResponse.class);
 
         return ftcValueResponse.transform(response);
+    }
+
+    /**
+     * Fetches FTC statistics
+     * @return FtcStatsResponse containing the FTC statistics
+     */
+    public FtcStatsResponse fetchFtcStatistics(){
+        HashMap<String,String> vars = new HashMap<String, String>();
+
+        String response = getJsonRequestExecutor().executeJsonRequest(DOMAIN,JSON_FTC_STATS, vars);
+
+        JsonResponseTransformer<FtcStatsResponse> ftcDifficultyResponseJsonResponseTransformer =
+                new JsonResponseTransformer<FtcStatsResponse>(FtcStatsResponse.class);
+
+        return ftcDifficultyResponseJsonResponseTransformer.transform(response);
     }
 }

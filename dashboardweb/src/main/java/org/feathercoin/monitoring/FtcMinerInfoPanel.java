@@ -3,11 +3,13 @@ package org.feathercoin.monitoring;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxLazyLoadPanel;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.feathercoin.monitoring.beans.SummaryBean;
 import org.feathercoin.monitoring.dto.Dev;
 import org.feathercoin.monitoring.dto.DevResponse;
@@ -22,14 +24,12 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FtcMinerInfoPanel extends Panel implements Serializable{
-    private MinerConnections minerConnections;
+    @SpringBean MinerConnections minerConnections;
 
-    public FtcMinerInfoPanel(String id, MinerConnections minerConnections){
+    public FtcMinerInfoPanel(String id){
         super(id);
-        this.minerConnections = minerConnections;
-
+        Injector.get().inject(this);
         addMinerSummaries();
-
     }
 
     private void addMinerSummaries() {
