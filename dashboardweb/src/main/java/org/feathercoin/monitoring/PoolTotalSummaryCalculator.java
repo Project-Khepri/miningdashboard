@@ -16,6 +16,8 @@ public class PoolTotalSummaryCalculator implements Serializable{
         BigDecimal totalConfirmedRewards = BigDecimal.ZERO;
 
         for (PoolInfoBean poolInfoBean : poolInfoBeans) {
+            if (poolInfoBean.isHasErrors())
+                continue;
             totalPayoutHistory = totalPayoutHistory.add(poolInfoBean.getPayoutHistory());
             totalHashrate += poolInfoBean.getTotalHashrate();
             totalRoundEstimate = totalRoundEstimate.add(poolInfoBean.getRoundEstimate());
