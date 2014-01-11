@@ -188,10 +188,12 @@ span.extension{
 #bd {
     position: absolute;
     top: 75px;
-    bottom: 200px;
+    bottom: 50px;
+    opacity: 0.8;
     left:25%;
 	width: 50%;
 	overflow: scroll;
+    z-index: 1000;
 	background-color : #fff;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;

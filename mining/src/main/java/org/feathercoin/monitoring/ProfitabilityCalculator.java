@@ -1,5 +1,6 @@
 package org.feathercoin.monitoring;
 
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import java.math.RoundingMode;
  * Mining p
  */
 @Component
-@Scope("prototype")
+@Scope(value=BeanDefinition.SCOPE_PROTOTYPE)
 public class ProfitabilityCalculator implements Serializable{
     private BigDecimal difficulty;
     private BigDecimal hashRate;

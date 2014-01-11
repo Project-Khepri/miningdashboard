@@ -29,7 +29,7 @@
                 var maxEarnings = d3.max(json, function(d) { return d.dailyProduction; })+10;
 
                 var margin = {top: 10, right: 10, bottom: 20, left: 30},
-                        width = 900 - margin.left - margin.right,
+                        width = 1050 - margin.left - margin.right,
                         height = 190 - margin.top - margin.bottom
                         ;
 
@@ -122,6 +122,24 @@
             });
         }
 
+        function toggleJSONVisibility(paramTest){
+            console.log( $( paramTest).find("tr.jsonContainer"));
+            $( paramTest).find("tr.jsonContainer").toggle();
+        }
+
+        var minerSectionIsLarge = true;
+        function toggleChartVisibility(paramTest){
+            if (minerSectionIsLarge==true){
+                $("#bd").css("bottom","200px");
+                $("#bd").css("opacity","1.0");
+                minerSectionIsLarge = false;
+            }else{
+                $("#bd").css("bottom","50px");
+                $("#bd").css("opacity","0.8");
+                minerSectionIsLarge = true;
+            }
+        }
+
         /*
         $(document).ready(function() {
             console.log('ready!');
@@ -151,7 +169,7 @@
     <div wicket:id="lazyLoadFtcMarketValues">Loading FTC values ...</div>
 </div>
 
-<div id="bd">
+<div id="bd" onclick="javascript:toggleChartVisibility(this);">
     <div wicket:id="lazyLoadFtcMinerInfos">Loading Miner Infos ...</div>
 
 
