@@ -20,9 +20,6 @@ public class JSONCallException extends RuntimeException {
         super(cause);
     }
 
-    public JSONCallException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 
     public JSONCallException setExceptions(List<Throwable> exceptions){
         this.exceptions.clear();
