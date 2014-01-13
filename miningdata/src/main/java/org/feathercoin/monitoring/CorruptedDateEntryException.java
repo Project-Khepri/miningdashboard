@@ -15,8 +15,4 @@ public class CorruptedDateEntryException extends RuntimeException {
     public CorruptedDateEntryException(Throwable cause) {
         super(cause);
     }
-
-    public CorruptedDateEntryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }
