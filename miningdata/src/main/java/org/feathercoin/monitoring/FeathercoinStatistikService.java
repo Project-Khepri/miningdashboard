@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class FeathercoinStatsService implements Serializable{
+public class FeathercoinStatistikService implements Serializable{
     @Autowired FeathercoinStatsRepository feathercoinStatsRepository;
     @Autowired GapFillerUtil gapFillerUtil;
 
