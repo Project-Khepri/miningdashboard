@@ -16,7 +16,7 @@ public class UpdateDailyProductionDataApp {
     public static void main(String... args){
         ClassPathXmlApplicationContext applicationContext =
                 new ClassPathXmlApplicationContext("/org/feathercoin/monitoring/dataApplicationContext.xml");
-        FeathercoinStatsService service = applicationContext.getBean(FeathercoinStatsService.class);
+        FeathercoinProductionService service = applicationContext.getBean(FeathercoinProductionService.class);
         PoolInformationProvider poolInformationProvider = applicationContext.getBean(PoolInformationProvider.class);
 
         D2Response d2Response = fetchD2PoolInfo(poolInformationProvider);

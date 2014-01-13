@@ -11,12 +11,12 @@ import org.feathercoin.monitoring.json.MiningStatsJsonConverter;
 import java.util.List;
 
 public class JsonWebPage extends WebPage {
-    @SpringBean private FeathercoinStatsService feathercoinStatsService;
+    @SpringBean private FeathercoinProductionService feathercoinProductionService;
     @SpringBean private MiningStatsJsonConverter miningStatsJsonConverter;
 
 
     public JsonWebPage(PageParameters pageParameters) {
-        List<MiningStats> currentMonthMiningStats = feathercoinStatsService.getLast30DaysMiningStats();
+        List<MiningStats> currentMonthMiningStats = feathercoinProductionService.getLast30DaysMiningStats();
 
         //String json = "{\"data\":[{\"name\":\"13.12.2013\",\"value\":4},{\"name\":\"14.12.2013\",\"value\":20}]}";
         String json = miningStatsJsonConverter.transformToJson(currentMonthMiningStats);

@@ -7,21 +7,28 @@
     <script>
 
         $(document).ready(function() {
+            var json = [{"dailyProduction":57.950,"fetchTime":"12-13"},{"dailyProduction":46.647,"fetchTime":"12-14"},{"dailyProduction":34.195,"fetchTime":"12-15"},{"dailyProduction":43.593,"fetchTime":"12-16"},{"dailyProduction":43.595,"fetchTime":"12-17"},{"dailyProduction":33.019,"fetchTime":"12-18"},{"dailyProduction":32.976,"fetchTime":"12-19"},{"dailyProduction":40.365,"fetchTime":"12-20"},{"dailyProduction":46.510,"fetchTime":"12-21"},{"dailyProduction":83.584,"fetchTime":"12-22"},{"dailyProduction":89.363,"fetchTime":"12-23"},{"dailyProduction":74.392,"fetchTime":"12-24"},{"dailyProduction":107.664,"fetchTime":"12-25"},{"dailyProduction":89.017,"fetchTime":"12-26"},{"dailyProduction":97.314,"fetchTime":"12-27"},{"dailyProduction":112.850,"fetchTime":"12-28"},{"dailyProduction":112.853,"fetchTime":"12-29"},{"dailyProduction":118.353,"fetchTime":"12-30"},{"dailyProduction":114.642,"fetchTime":"12-31"},{"dailyProduction":98.562,"fetchTime":"01-01"},{"dailyProduction":90.357,"fetchTime":"01-02"},{"dailyProduction":47.532,"fetchTime":"01-03"},{"dailyProduction":85.325,"fetchTime":"01-04"},{"dailyProduction":53.965,"fetchTime":"01-05"},{"dailyProduction":72.517,"fetchTime":"01-06"},{"dailyProduction":68.474,"fetchTime":"01-07"},{"dailyProduction":93.012,"fetchTime":"01-08"},{"dailyProduction":65.444,"fetchTime":"01-09"},{"dailyProduction":69.472,"fetchTime":"01-10"},{"dailyProduction":60.812,"fetchTime":"01-11"},{"dailyProduction":26.615,"fetchTime":"01-12"}];
+            var jsonDifficulty = [{"dailyProduction":57.950,"fetchTime":"12-13"},{"dailyProduction":46.647,"fetchTime":"12-14"},{"dailyProduction":34.195,"fetchTime":"12-15"},{"dailyProduction":43.593,"fetchTime":"12-16"},{"dailyProduction":43.595,"fetchTime":"12-17"},{"dailyProduction":33.019,"fetchTime":"12-18"},{"dailyProduction":32.976,"fetchTime":"12-19"},{"dailyProduction":40.365,"fetchTime":"12-20"},{"dailyProduction":46.510,"fetchTime":"12-21"},{"dailyProduction":83.584,"fetchTime":"12-22"},{"dailyProduction":89.363,"fetchTime":"12-23"},{"dailyProduction":74.392,"fetchTime":"12-24"},{"dailyProduction":107.664,"fetchTime":"12-25"},{"dailyProduction":89.017,"fetchTime":"12-26"},{"dailyProduction":97.314,"fetchTime":"12-27"},{"dailyProduction":112.850,"fetchTime":"12-28"},{"dailyProduction":112.853,"fetchTime":"12-29"},{"dailyProduction":118.353,"fetchTime":"12-30"},{"dailyProduction":114.642,"fetchTime":"12-31"},{"dailyProduction":98.562,"fetchTime":"01-01"},{"dailyProduction":90.357,"fetchTime":"01-02"},{"dailyProduction":47.532,"fetchTime":"01-03"},{"dailyProduction":85.325,"fetchTime":"01-04"},{"dailyProduction":53.965,"fetchTime":"01-05"},{"dailyProduction":72.517,"fetchTime":"01-06"},{"dailyProduction":68.474,"fetchTime":"01-07"},{"dailyProduction":93.012,"fetchTime":"01-08"},{"dailyProduction":65.444,"fetchTime":"01-09"},{"dailyProduction":69.472,"fetchTime":"01-10"},{"dailyProduction":60.812,"fetchTime":"01-11"},{"dailyProduction":26.615,"fetchTime":"01-12"}];
+            $.each(jsonDifficulty, function( index, value ) {
+                value.dailyProduction=value.dailyProduction*Math.random();
+            });
 
 
-            d3.json("http://localhost:8080/data/graph", function(error, json) {
-                if (error) return console.warn(error);
                 console.log(json);
+                console.log(jsonDifficulty);
 
                 var dailyFtcEarnings = json.map(function(d) { return d.dailyProduction; });
                 var fetchTimes = json.map(function(d) { return d.fetchTime; });
 
                 var xDomain = json.map(function(d) { return d.fetchTime; })
+                var xDomainDifficulty = jsonDifficulty.map(function(d) { return d.fetchTime; })
+
                 var maxEarnings = d3.max(json, function(d) { return d.dailyProduction; })+10;
+                var maxEarningsDifficulty = d3.max(jsonDifficulty, function(d) { return d.dailyProduction; })+10;
 
                 var margin = {top: 10, right: 10, bottom: 20, left: 30},
-                        width = 900 - margin.left - margin.right,
-                        height = 300 - margin.top - margin.bottom
+                        width = 1050 - margin.left - margin.right,
+                        height = 190 - margin.top - margin.bottom
                         ;
 
                 var x = d3.scale.ordinal()
@@ -32,12 +39,21 @@
                         .scale(x)
                         .orient("bottom")
                         .tickSize(5, 5)
-                        //.tickFormat(d3.time.format(""));
+                //.tickFormat(d3.time.format(""));
 
+                var yDifficulty = d3.scale.linear()
+                    .domain([0,maxEarningsDifficulty])
+                    .range([height,0])
 
                 var y = d3.scale.linear()
                         .domain([0,maxEarnings])
                         .range([height,0])
+
+                var yAxisDifficulty = d3.svg.axis()
+                    .scale(yDifficulty)
+                    .orient("right")
+                    .tickSize(5, 5)
+                    .tickFormat(d3.format("^f"));
 
                 var yAxis = d3.svg.axis()
                         .scale(y)
@@ -45,14 +61,9 @@
                         .tickSize(5, 5)
                         .tickFormat(d3.format("^f"));
 
-                dailyFtcEarningsOrdning = d3.scale.ordinal()
-                        .domain(xDomain)
-                        .rangeRoundBands([0, width], 0.1, 0.05);
-
-                console.log(dailyFtcEarningsOrdning.rangeBand());
 
 
-                var svg = d3.select("body").append("svg")
+                var svg = d3.select("#chart").append("svg")
                         .attr("width", width + margin.left + margin.right+50)
                         .attr("height", height + margin.top + margin.bottom)
                         .append("g")
@@ -89,16 +100,27 @@
                         .attr("y", 2);
 
 
+                svg.append("g")
+                    .attr("class", "y axisDifficulty")
+                    .attr("transform", "translate("+width+"," + 0 + ")")
+                    .call(yAxisDifficulty)
+                    .selectAll(".tick text")
+                    .style("text-anchor", "start")
+                    .attr("x", 10)
+                    .attr("y", 2);
+
+
 
 
                 var yValues = d3.scale.linear()
                         .range([height, 0]);
                 yValues.domain([0, maxEarnings]);
 
-                xDomain.forEach(function(value){
-                    console.log("{"+dailyFtcEarningsOrdning(value)+";"+(dailyFtcEarningsOrdning(value)+dailyFtcEarningsOrdning.rangeBand())+"}");
 
-                });
+                var yValuesDifficulty = d3.scale.linear()
+                    .range([height, 0]);
+                yValuesDifficulty.domain([0, maxEarningsDifficulty]);
+
 
                 svg.selectAll(".bar")
                         .data(json)
@@ -110,7 +132,36 @@
                         .attr("height", function(d) { return height - yValues(d.dailyProduction); })
                         .attr("width", x.rangeBand())
 
-                });
+                var lineDifficulty = d3.svg.line()
+                    .x(function(d) {
+
+                        return x(d.fetchTime)+x.rangeBand()/2; })
+                    .y(function(d) { return yValuesDifficulty(d.dailyProduction); })
+                    .interpolate("linear");
+
+                svg.append("path")
+                        .attr("d", lineDifficulty(jsonDifficulty))
+                        .attr("stroke", "black")
+                        .attr("fill", "transparent")
+
+                /*
+
+                 <path id="testLine" stroke="black" fill="transparent"></path>
+                 var line = d3.svg.line()
+                 .x(function(d) {
+                 console.log(d.x)
+                 return d.x; })
+                 .y(function(d) { return d.y; })
+                 .interpolate("basis"); //linear
+
+                 var lineData = [ { "x": 1,   "y": 5},  { "x": 20,  "y": 20},
+                 { "x": 40,  "y": 10}, { "x": 60,  "y": 40},
+                 { "x": 80,  "y": 5},  { "x": 100, "y": 60}];
+                 d3.select("#testLine")
+                 .attr("d", line(lineData));
+
+                 */
+
 
 
         });
@@ -118,6 +169,21 @@
     </script>
 
     <style>
+
+        #chart {
+            position: absolute;
+            margin-left: 10px;
+            bottom: 0px;
+            width : 80%;
+            height : 190px;
+            background-color : white;
+            overflow: scroll;
+            float: left;
+            z-index : 3;
+            color:white;
+            font-size: x-small;
+        }
+
         .axis text {
             font: 10px sans-serif;
         }
@@ -129,14 +195,35 @@
             shape-rendering: crispEdges;
         }
 
+        .axisDifficulty text {
+            font: 10px sans-serif;
+        }
+
+        .axisDifficulty path,
+        .axisDifficulty line {
+            fill: none;
+            stroke: #AAA;
+            shape-rendering: crispEdges;
+        }
+
         .y.axis line {
-            stroke: #777;
+            stroke: #AAA;
+        }
+
+        .y.axisDifficulty line {
+            stroke: #AAA;
         }
 
         .bar {
             stroke: #777;
-            fill:blue;
-            fill-opacity:0.3;
+            fill:#6493D2;
+            fill-opacity:1;
+        }
+
+        .line {
+            stroke: #777;
+            fill:#6493D2;
+            fill-opacity:1;
         }
 
         .valueInChart {
@@ -145,10 +232,12 @@
             text-anchor: middle;
         }
 
-
     </style>
 </head>
 <body>
+<div id="chart">
 
+
+</div>
 </body>
 </html>
