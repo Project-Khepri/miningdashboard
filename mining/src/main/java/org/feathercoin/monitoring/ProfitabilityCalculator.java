@@ -53,11 +53,17 @@ public class ProfitabilityCalculator implements Serializable{
     }
 
     private BigDecimal calculateHashtime(){
+        if (BigDecimal.ZERO.equals(hashRate))
+            return BigDecimal.ZERO;
         return difficulty.multiply(BigDecimal.valueOf(2).pow(32,MathContext.UNLIMITED)).divide(hashRate.multiply(BigDecimal.valueOf(1000)),20,RoundingMode.FLOOR);
     }
 
     public BigDecimal calculateCoinsPerDay(){
-        return BigDecimal.valueOf(3600).multiply(BigDecimal.valueOf(24).multiply(feathercoinsPerBlock)).divide(calculateHashtime(),14, RoundingMode.HALF_UP);
+
+        BigDecimal hashtime = calculateHashtime();
+        if (BigDecimal.ZERO.equals(hashtime))
+            return BigDecimal.ZERO;
+        return BigDecimal.valueOf(3600).multiply(BigDecimal.valueOf(24).multiply(feathercoinsPerBlock)).divide(hashtime,14, RoundingMode.HALF_UP);
     }
 
     public BigDecimal calculatePowerCostsPerDay(){
@@ -73,6 +79,10 @@ public class ProfitabilityCalculator implements Serializable{
     }
 
     public BigDecimal calculateHardwareBreakEvenInDays(){
-        return miningHardwareCosts.divide(calculateNetRevenuePerDay(),0,RoundingMode.FLOOR);
+
+        BigDecimal netRevenuePerDay = calculateNetRevenuePerDay();
+        if (BigDecimal.ZERO.equals(netRevenuePerDay))
+            return BigDecimal.ZERO;
+        return miningHardwareCosts.divide(netRevenuePerDay,0,RoundingMode.FLOOR);
     }
 }

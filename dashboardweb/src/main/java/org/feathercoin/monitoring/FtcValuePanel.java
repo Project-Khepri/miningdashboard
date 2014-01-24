@@ -175,13 +175,18 @@ public class FtcValuePanel extends Panel implements Serializable {
                                 profitabilityCalculator.setDifficulty(result.getCurrentDiff());
                                 profitabilityCalculator.setElectricityRate(minerStatsConfiguration.getElectricityRate());
 
+                                BigDecimal coinsPerDay = profitabilityCalculator.calculateCoinsPerDay();
+                                BigDecimal NetRevenuePerDay = profitabilityCalculator.calculateNetRevenuePerDay();
+                                BigDecimal powerCostsPerDay = profitabilityCalculator.calculatePowerCostsPerDay();
+                                BigDecimal revenuePerDay = profitabilityCalculator.calculateRevenuePerDay();
+                                BigDecimal breakEvenInDays = profitabilityCalculator.calculateHardwareBreakEvenInDays();
+                                add(new Label("ftcCoinsPerDay", coinsPerDay));
+                                add(new Label("ftcNetRevenuePerDay", NetRevenuePerDay));
+                                add(new Label("ftcPowerCostsPerDay", powerCostsPerDay));
+                                add(new Label("ftcRevenuePerDay", revenuePerDay));
+                                add(new Label("ftcHardwareBreakEvenInDays", breakEvenInDays));
                                 add(new Label("ftcPowerConsumption", minerStatsConfiguration.getPowerConsumptionInWatts()));
                                 add(new Label("ftcElectricityRate", minerStatsConfiguration.getElectricityRate()));
-                                add(new Label("ftcCoinsPerDay", profitabilityCalculator.calculateCoinsPerDay()));
-                                add(new Label("ftcNetRevenuePerDay", profitabilityCalculator.calculateNetRevenuePerDay()));
-                                add(new Label("ftcPowerCostsPerDay", profitabilityCalculator.calculatePowerCostsPerDay()));
-                                add(new Label("ftcRevenuePerDay", profitabilityCalculator.calculateRevenuePerDay()));
-                                add(new Label("ftcHardwareBreakEvenInDays", profitabilityCalculator.calculateHardwareBreakEvenInDays()));
                                 add(new Label("ftcHardwareCosts", minerStatsConfiguration.getHardwareCosts()));
                             }
                         },
